@@ -1,0 +1,7 @@
+/backend
+/crowling
+node_modules
+package-lock.json
+
+tsconfig.json
+tsconfig.*.json
