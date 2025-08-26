@@ -1,43 +1,36 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import axios from 'axios'
-import type { Auction } from './types/auction';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import './App.css';
+import Main from './pages/main';
+import Header from './components/common/Header';
+import PublicAuction from './pages/PublicAuction';
+import Signup from './pages/Auth/Signup';
+import Login from './pages/Auth/Login';
+
 
 function App() {
-  const [auctions, setAuctions] = useState<Auction[]>([])
-  const auctionsLength = auctions?.length; 
-
-  useEffect(() => {
-    async function fetchOpenApi() {
-      const res = await axios.get('/api/auctions');
-      console.log("🚀 ~ fetchOpenApi ~ res:", res)
-      if (res.status === 200) {
-        setAuctions(res.data)
-      }
-    } 
-    fetchOpenApi()
-  }, [])
 
 
   return (
     <>
-      <div>
-        <h1>총 : {auctionsLength}개</h1>
-        {
-          auctions.slice(0, 10).map(auction => (
-            <div>
-              <div>{auction.jiwonNm}</div>
-              <div>{auction.dspslUsgNm}</div>
-              <div>{auction.printSt}</div>
-              <div>{auction.convAddr}</div>
-              <div>{auction.gamevalAmt}</div>
-              <div>{auction.notifyMinmaePrice1}</div>
-              <div>{auction.jpDeptNm}</div>
-              <div>유찰 {auction.yuchalCnt}회</div>
-            </div>
-          ))
-        }
-      </div>
+      <BrowserRouter>
+        <div className='min-h-screen '>
+        <Header />
+
+        <main className='w-full'>
+          <Routes>
+            <Route path='/' element={<Main/>}></Route>
+            <Route path='/auction' element={<div>auction</div>} ></Route>
+            <Route path='/public-auction' element={<PublicAuction />}></Route>
+          
+          {/* 인증 */}
+            <Route path='/sign-up' element={<Signup/>}></Route>
+            <Route path='/login' element={<Login/>}></Route>
+            
+          </Routes>
+
+        </main>
+        </div>
+      </BrowserRouter>
     </>
   )
 }
