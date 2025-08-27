@@ -1,12 +1,14 @@
-import express from 'express'
-import sqlite3 from 'sqlite3'
-import cors from 'cors'
+import dotenv from 'dotenv'
 import axios from 'axios';
-import { 공매_URL } from './OpenApi.js';
-import signupRouter from './routes/signupRouter.js';
-import verifyRouter from './routes/verifyCode.js';
+import cors from 'cors';
+import express from 'express';
 import pgClient from './lib/pgClient.js';
 import loginRouter from './routes/loginRouter.js';
+import signupRouter from './routes/signupRouter.js';
+import verifyRouter from './routes/verifyCode.js';
+import publicAuctionRouter from './routes/publicAuction.js';
+
+dotenv.config()
 
 const app = express()
 const port = 8080
@@ -53,7 +55,7 @@ pgClient.connect();
 
 // Open API
 const baseUrl = 'https://apis.data.go.kr/1613000/RTMSDataSvcInduTrade/getRTMSDataSvcInduTrade';
-const serviceKey = '723a99bfbb2953d170bc538668482cb82f32793a2565bfbfc79f55299ab58df9'
+
 // app start
 app.get('/api', async (req, res) => {
   try {
@@ -86,36 +88,8 @@ app.get("/api/auctions", (req, res) => {
   })
 })
 
-app.get('/api/public-auctions', async (req, res) => {
-  try {
-    const params = {
-      serviceKey: serviceKey,
-      numOfRows: 5,           // 5개 결과
-      pageNo: 1,              // 1페이지
-      DPSL_MTD_CD: '0001',    // 매각
-      BID_MTD_CD: '0001',     // 최고가방식
-      BID_DVSN_CD: '0001'     // 인터넷공매
-    };
-
-    const response = await axios.get(`${공매_URL.공고목록조회}`, {
-      params,
-      timeout: 10000
-    });
-
-    res.json({
-      success: true,
-      data: response.data
-    });
-
-  } catch (error) {
-    console.error('API 호출 오류:', error.message);
-    res.status(500).json({
-      success: false,
-      error: error.message,
-      details: error.response?.data || null
-    });
-  }
-})
+// 공매
+app.use('/api', publicAuctionRouter)
 
 // 인증
 app.use(signupRouter)
