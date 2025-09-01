@@ -1,69 +1,23 @@
-# React + TypeScript + Vite
+AuctionDetail 프롬프트
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+data를 활용해여 아래 내용처럼 ui를 만들어라.
 
-Currently, two official plugins are available:
+2022 타경 103226서울중앙지방법원 경매2계(02-530-1814) 매각기일 2025-09-04(10:00)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+아래는 table태그 활용하여 그릴것것 
 
-## Expanding the ESLint configuration
+(1행에 1개의 데이터)
+소재지: 서울특별시 관악구 봉천동 1644-7 궁전빌리지 3층307호
+도로명 주소: 서울특별시 관악구 인헌1길 14, 궁전빌리지 3층307호
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+(1행에 3개의 데이터)
+물건종별	다세대(빌라)	사건접수	2022.04.08	경매구분	임의경매,
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+대지권	77.08㎡ (23.32평)	소 유 자	백혜진	감 정 가	622,000,000,
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+건물면적	115.8㎡ (35.03평)	채 무 자	백혜진	최 저 가	(64%) 398,080,000,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+배당종기일	2022-06-30	채 권 자	㈜디비저축은행	보 증 금	(10%) 39,808,000,
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+매각조건	허가취소, 재매각, 대항력있는임차인
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```

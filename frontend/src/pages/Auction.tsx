@@ -1,20 +1,6 @@
-import { auctionListDummy, type AuctionItem } from './../../data/auctionList';
-
-
-
-// 매각기일 maeGiil (maeHh1)
-// 용도 dspslUsgNm
-
-// 물건기본내역 
-// 1 printCsNo
-// 2 hjguSido / hjguSigu / hjguDong / hjguRd / daepyoLotno / buldNm
-// 3
-// 4 
-
-// 감정가 gamevalAmt
-// 최저가 notifyMinmaePrice1 ~ notifyMinmaePrice4 중 0이 아닌 작은 수
-
-// 상태 yuchalCnt (notifyMinmaePriceRate1)
+import { useNavigate } from 'react-router';
+import { auctionListDummy, type AuctionItem } from '../../data/auctionList';
+import type { Auction } from '../types/auction';
 
 export default function Auction() {
   const auctionData = auctionListDummy;
@@ -29,6 +15,8 @@ export default function Auction() {
 }
 
 const AuctionTable: React.FC<{ auctionData: AuctionItem[] }> = ({ auctionData }) => {
+  const navigate = useNavigate()
+  
   // 날짜 변환 (20250827 → 2025-08-27)
   const formatDate = (dateStr: string) => {
     return `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
@@ -68,12 +56,18 @@ const AuctionTable: React.FC<{ auctionData: AuctionItem[] }> = ({ auctionData })
     }
   };
 
+  const navigateAuctionDetail = (id: string) => {
+    // navigate(`/auction/${id}`) // 절대경로
+    navigate(id) // 상대경로
+  }
+
   return (
     <table className="min-w-full border border-gray-300 text-sm">
-      <thead className="bg-gray-100">
+      <thead className="bg-table-head text-table-foreground ">
         <tr>
           <th className="border px-4 py-2">매각기일</th>
           <th className="border px-4 py-2">용도</th>
+          <th className='border px-4 py-2'>이미지</th>
           <th className="border px-4 py-2">상태</th>
           <th className="border px-4 py-2">사건번호</th>
           <th className="border px-4 py-2">주소</th>
@@ -94,6 +88,9 @@ const AuctionTable: React.FC<{ auctionData: AuctionItem[] }> = ({ auctionData })
             </td>
             <td className="border px-4 py-2 text-center">
               [{item.dspslUsgNm}]
+            </td>
+            <td onClick={()=>navigateAuctionDetail(item.docid)} className="border px-4 py-2 text-center">
+              <img src='/frontend/public/vite.svg' alt='temp' className='w-full h-full' /> 
             </td>
             <td className="border px-4 py-2 text-center text-red-500 font-semibold">
               {getStatus(item)}
