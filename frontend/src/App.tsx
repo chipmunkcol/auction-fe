@@ -1,33 +1,22 @@
+import { useContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import './App.css';
-import Main from './pages/main';
 import Header from './components/common/Header';
-import PublicAuction from './pages/PublicAuction';
-import Signup from './pages/auth/Signup';
-import Login from './pages/auth/Login';
+import { ThemeContext } from './hooks/ThemeContext.js';
 import Dashboard from './pages/admin/Dashboard';
 import Auction from './pages/Auction';
-import { useEffect, useState } from 'react';
 import AuctionDetail from './pages/AuctionDetail';
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
+import Main from './pages/main';
+import PublicAuction from './pages/PublicAuction';
 
 
 function App() {
   // 로그인 시 유저 정보 저장 및 admin 판단
   const isAdmin = true
 
-
-  const [dark, setDart] = useState(false)
-  useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  })
-
-  const toggleTheme = () => {
-    setDart((prev => !prev))
-  }
+  const { toggleTheme } = useContext(ThemeContext)
 
   return (
     <>
