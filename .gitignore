@@ -1,4 +1,6 @@
 /crowling
+/backend
+
 node_modules
 package-lock.json
 
