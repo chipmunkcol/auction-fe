@@ -10,7 +10,7 @@ import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import Main from './pages/main';
 import PublicAuction from './pages/PublicAuction';
-
+import TableComponent from './components/common/TableComponent'
 
 function App() {
   // 로그인 시 유저 정보 저장 및 admin 판단
@@ -41,7 +41,11 @@ function App() {
           {/* 관리자 모드 */}
             {
               isAdmin &&
-              <Route path='/admin' element={<Dashboard />} />}
+              <Route path='/admin' element={<Dashboard />} />
+            }
+
+          {/* 공통 컴포넌트 */}
+            <Route path='/test' element={<TableComponent />}></Route>
           </Routes>
 
         </main>

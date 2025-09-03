@@ -10,7 +10,8 @@ export default function Header() {
     {path: '/auction', label: '경매'},
     {path: '/public-auction', label: '공매'},
     {path: '/login', label: '로그인'},
-    {path: '/sign-up', label: '회원가입'}
+    {path: '/sign-up', label: '회원가입'},
+    {path: '/test', label: '테스트'}
   ]; 
   
   return (
