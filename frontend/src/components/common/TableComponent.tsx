@@ -1,79 +1,79 @@
-import React from 'react';
-import { Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
+import { Table } from 'antd';
+import React from 'react';
+import { auctionDetail } from '../../../data/auctionDetail';
 
-interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-  tags: string[];
+const { gdsDspslDxdyLst } = auctionDetail.data.dma_result
+
+const 기일종류: Record<string, string> = {
+  "01": "매각기일",
+  "02": "매각결정기일",
+};
+
+const get기일종류 = (sort: string): string => {
+  return 기일종류[sort] ?? `알수 없음 (${sort})`
 }
 
-const columns: TableProps<DataType>['columns'] = [
+const 기일결과: Record<string, string> = {
+  "001": "매각",
+  "002": "유찰",
+  "003": "최고가매각허가결정",
+  "017": "최고가매각허가취소결정",
+};
+
+const get기일결과 = (sort: string): string => {
+  return 기일결과[sort] ?? `알수 없음 (${sort})`
+}
+
+const numberFormatter = new Intl.NumberFormat("ko-KR")
+
+const columns: TableProps['columns'] = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    title: '기일',
+    dataIndex: 'dxdyYmd',
+    key: '기일',
     // render: (text) => <a>{text}</a>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: '기일종류',
+    dataIndex: 'auctnDxdyKndCd',
+    key: '기일종류',
+    render: (text) => <div>{get기일종류(text)}</div>
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: '기일장소',
+    dataIndex: 'dxdyPlcNm',
+    key: '기일장소',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
+    title: '최저매각가격',
+    dataIndex: 'tsLwsDspslPrc',
+    key: '최저매각가격',
+    render: (value) => <div>{numberFormatter.format(value) || ''} </div>
   },
   {
-    title: '데이터 가져오기',
-    key: 'get',
-    render: (_, record) => (
-      <div classname="flex">
-        <div>{record.name}</div>
-        <div>{record.age}</div>
-        <div>{record.tags}</div>
-      </div>
-    ),
+    title: '기일결과',
+    dataIndex: 'auctnDxdyRsltCd',
+    key: '기일결과',
+    render: (text) => <div>{get기일결과(text)}</div>
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
+const data = gdsDspslDxdyLst;
 
 const TableComponent: React.FC = () => 
-<Table<DataType> 
+<Table 
   columns={columns} 
   dataSource={data} 
-  bordered  
+  pagination={false}
+  rowKey="key"               // 각 행의 고유 key (string | (record) => string)
+
+  // ✅ 스타일 & 레이아웃
+  title={()=> <h2 className='text-base'>기일내역</h2>}
+  bordered                  // 테이블에 border 추가
+  size="small"             // 테이블 크기: "small" | "middle" | "large"
+  tableLayout="auto"       // 컬럼 너비 고정 ("auto" | "fixed")
+  showHeader={true}         // 헤더 표시 여부
 />;
 
 export default TableComponent;
