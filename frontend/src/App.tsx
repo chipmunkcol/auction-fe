@@ -11,7 +11,8 @@ import Signup from './pages/auth/Signup';
 import Main from './pages/main';
 import PublicAuction from './pages/PublicAuction';
 import TableComponent from './components/common/TableComponent'
-import DescTableCompeont from './components/common/DescTableCompeont.js';
+import DescTableCompeont from './components/common/DescTableCompeont';
+import ButtonComponet from './components/common/ButtonComponet';
 
 function App() {
   // 로그인 시 유저 정보 저장 및 admin 판단
@@ -46,7 +47,12 @@ function App() {
             }
 
           {/* 공통 컴포넌트 */}
-            <Route path='/test' element={<><DescTableCompeont /><TableComponent /></>}></Route>
+            <Route path='/test' element={<>
+              <ButtonComponet />
+              <DescTableCompeont />
+              <TableComponent />
+              </>}>
+            </Route>
           </Routes>
 
         </main>
