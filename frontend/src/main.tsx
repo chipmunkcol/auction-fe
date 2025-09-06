@@ -3,6 +3,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { ThemeProvider } from "./hooks/ThemeContext.tsx";
 import { ConfigProvider } from "antd";
+import koKR from "antd/locale/ko_KR";
 
 function getCssVar(name: string) {
   return getComputedStyle(document.documentElement)
@@ -22,14 +23,20 @@ createRoot(document.getElementById("root")!).render(
   // <StrictMode>
   <ThemeProvider>
     <ConfigProvider
-      // theme={getAntdTheme()}
+      // theme={getAntdTheme()}App
+      locale={koKR}
       theme={{
         token: {
           // colorPrimary: getCssVar("--primary"),
+          borderRadius: 0,
         },
         components: {
           Button: {
             colorPrimary: getCssVar("--primary"),
+          },
+
+          DatePicker: {
+            borderRadius: 0,
           },
           Input: {
             // input은 효과없는게 좋을듯
