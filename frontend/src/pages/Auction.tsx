@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { auctionListDummy, type AuctionItem } from "../../data/auctionList";
 import type { Auction } from "../types/auction";
 import SearchTable from "../components/auction/SearchTable";
+import AuctionTable from "../components/auction/AuctionTable";
 
 export default function Auction() {
   const auctionData = auctionListDummy;
@@ -9,14 +10,12 @@ export default function Auction() {
   return (
     <div>
       <h1>경매 물건 페이지</h1>
-      <AuctionTable auctionData={auctionData} />
+      <Table auctionData={auctionData} />
     </div>
   );
 }
 
-const AuctionTable: React.FC<{ auctionData: AuctionItem[] }> = ({
-  auctionData,
-}) => {
+const Table: React.FC<{ auctionData: AuctionItem[] }> = ({ auctionData }) => {
   const navigate = useNavigate();
 
   // 날짜 변환 (20250827 → 2025-08-27)
@@ -66,70 +65,96 @@ const AuctionTable: React.FC<{ auctionData: AuctionItem[] }> = ({
   };
 
   return (
-    <div className="p-4">
-      <SearchTable />
+    <div className="flex flex-col items-center w-[1440px] mx-auto">
+      <div className="w-full">
+        <SearchTable />
+      </div>
 
-      <table className="min-w-full border border-gray-300 text-sm">
-        <thead className="bg-table-head text-table-foreground ">
-          <tr>
-            <th className="border px-4 py-2">매각기일</th>
-            <th className="border px-4 py-2">용도</th>
-            <th className="border px-4 py-2">이미지</th>
-            <th className="border px-4 py-2">상태</th>
-            <th className="border px-4 py-2">사건번호</th>
-            <th className="border px-4 py-2">주소</th>
-            <th className="border px-4 py-2">비고</th>
-            <th className="border px-4 py-2">면적</th>
-            <th className="border px-4 py-2">감정가</th>
-            <th className="border px-4 py-2">최저가</th>
-            <th className="border px-4 py-2">유찰</th>
-          </tr>
-        </thead>
-        <tbody>
-          {auctionData.map((item, idx) => (
-            <tr key={idx} className="hover:bg-gray-50">
-              <td className="border px-4 py-2 text-center">
-                {formatDate(item.maeGiil)}
-                <br />({formatTime(item.maeHh1)})
-              </td>
-              <td className="border px-4 py-2 text-center">
-                [{item.dspslUsgNm}]
-              </td>
-              <td
-                onClick={() => navigateAuctionDetail(item.docid)}
-                className="border px-4 py-2 text-center"
-              >
-                <img
-                  src="/frontend/public/vite.svg"
-                  alt="temp"
-                  className="w-full h-full"
-                />
-              </td>
-              <td className="border px-4 py-2 text-center text-red-500 font-semibold">
-                {getStatus(item)}
-              </td>
-              <td className="border px-4 py-2 text-center">
-                {item.jiwonNm} {item.jpDeptNm}
-                <br />
-                {item.srnSaNo}
-              </td>
-              <td className="border px-4 py-2">{item.printSt}</td>
-              <td className="border px-4 py-2">{item.mulBigo}</td>
-              <td className="border px-4 py-2">{item.pjbBuldList}</td>
-              <td className="border px-4 py-2 text-right">
-                {formatNumber(item.gamevalAmt)}원
-              </td>
-              <td className="border px-4 py-2 text-right">
-                {formatNumber(item.notifyMinmaePrice1)}원
-                <br />({item.notifyMinmaePriceRate1}%)
-              </td>
-              <td className="border px-4 py-2 text-center">
-                {item.yuchalCnt}회
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="w-full">
+        <AuctionTable />
+      </div>
     </div>
   );
 };
+
+// <table className="min-w-6xl border border-gray-300 text-sm">
+// <thead className="bg-table-head text-table-foreground ">
+//   <tr>
+//     <th className="border px-4 py-2">사진</th>
+//     <th className="border px-4 py-2">
+//       매각기일 <br /> 용도
+//     </th>
+//     <th className="border px-4 py-2">물건기본내역</th>
+//     <th className="border px-4 py-2">
+//       감정가 <br /> 최저가
+//     </th>
+//     <th className="border px-4 py-2">상태</th>
+//     <th className="border px-4 py-2">경매대행문의</th>
+//     <th className="border px-4 py-2">조회</th>
+//   </tr>
+// </thead>
+// <tbody>
+//   {auctionData.map((item, idx) => (
+//     <tr key={idx} className="hover:bg-gray-50">
+//       <td>
+
+//       </td>
+//       <td className="border px-4 py-2 text-center">
+//         {/* 매각기일 ex) 2025-08-27 */}
+//         {formatDate(item.maeGiil)}
+//         <br />({/* 매각시간 ex) 10:00 */}{formatTime(item.maeHh1)})
+//       </td>
+//       <td className="border px-4 py-2 text-center">
+//         {/* 용도 ex) 다세대, 아파트, 빌딩 */}[{item.dspslUsgNm}]
+//       </td>
+//       <td
+//         onClick={() => navigateAuctionDetail(item.docid)}
+//         className="border px-4 py-2 text-center"
+//       >
+//         {/* 이미지 - 클릭시 상세페이지 이동 */}
+//         <img
+//           src="/frontend/public/vite.svg"
+//           alt="temp"
+//           className="w-full h-full"
+//         />
+//       </td>
+//       <td className="border px-4 py-2 text-center text-red-500 font-semibold">
+//         {/* 상태 ex) 입찰당일, 예정, 종료 */}
+//         {getStatus(item)}
+//       </td>
+//       <td className="border px-4 py-2 text-center">
+//         {/* 지원명 + 부서명 ex) 서울중앙지방법원 경매과 */}
+//         {item.jiwonNm} {item.jpDeptNm}
+//         <br />
+//         {/* 사건번호 ex) 2024-123456 */}
+//         {item.srnSaNo}
+//       </td>
+//       <td className="border px-4 py-2">
+//         {/* 주소 ex) 서울특별시 강남구 테헤란로 123 */}
+//         {item.printSt}
+//       </td>
+//       <td className="border px-4 py-2">
+//         {/* 비고 ex) 권리분석 필요, 점유자 있음 */}
+//         {item.mulBigo}
+//       </td>
+//       <td className="border px-4 py-2">
+//         {/* 면적 ex) 84.5㎡ */}
+//         {item.pjbBuldList}
+//       </td>
+//       <td className="border px-4 py-2 text-right">
+//         {/* 감정가 ex) 500,000,000원 */}
+//         {formatNumber(item.gamevalAmt)}원
+//       </td>
+//       <td className="border px-4 py-2 text-right">
+//         {/* 최저가 ex) 400,000,000원 */}
+//         {formatNumber(item.notifyMinmaePrice1)}원
+//         <br />({/* 최저가 비율 ex) 80% */}{item.notifyMinmaePriceRate1}%)
+//       </td>
+//       <td className="border px-4 py-2 text-center">
+//         {/* 유찰 횟수 ex) 2회 */}
+//         {item.yuchalCnt}회
+//       </td>
+//     </tr>
+//   ))}
+// </tbody>
+// </table>

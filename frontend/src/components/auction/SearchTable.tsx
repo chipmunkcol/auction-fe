@@ -6,6 +6,7 @@ import {
   Select,
   type RadioChangeEvent,
 } from "antd";
+import axios from "axios";
 import type dayjs from "dayjs";
 import { useState } from "react";
 const { RangePicker } = DatePicker;
@@ -40,6 +41,16 @@ const SearchTable = () => {
     console.log("🚀 ~ onChange법원 ~ value:", value);
   };
 
+  const [사건년도, set사건년도] = useState("");
+  const onChange사건년도 = (value: string) => {
+    set사건년도(value);
+  };
+
+  const [타경, set타경] = useState("");
+  const onChange타경 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    set타경(e.target.value);
+  };
+
   const [경매종류, set경매종류] = useState("전체");
   const onChange경매종류 = (e: RadioChangeEvent) => {
     set경매종류(e.target.value);
@@ -53,6 +64,18 @@ const SearchTable = () => {
     start: null,
     end: null,
   });
+
+  const handleSearch = () => {
+    axios.get("temp", {
+      params: {
+        법원,
+        사건년도,
+        타경,
+        경매종류,
+        매각기일,
+      },
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -86,12 +109,13 @@ const SearchTable = () => {
                   optionFilterProp="label"
                   options={사건년도option}
                   className="w-[100px]"
+                  onChange={onChange사건년도}
                 />
               </div>
               <div className="flex gap-2">
                 <div>타경</div>
                 <div className="w-[100px]">
-                  <Input />
+                  <Input onChange={onChange타경} />
                 </div>
               </div>
             </div>
@@ -151,7 +175,7 @@ const SearchTable = () => {
         {/* 공시가격 */}
 
         {/* 비슷한 구성 반복 */}
-        <div className="flex border-b border-border">
+        <div className="flex">
           <div className="flex flex-1 ">
             <div className="flex-1 flex items-center bg-table-head p-2">
               감정가
@@ -197,45 +221,34 @@ const SearchTable = () => {
             </div>
           </div>
         </div>
-
-        {/* 비슷한 구성 반복 */}
-        <div className="flex border-b border-border">
-          <div className="flex flex-1 ">
-            <div className="flex-1 flex items-center bg-table-head p-2">
-              건물면적
-            </div>
-            <div className="flex-3 flex items-center p-2">m ~ m</div>
-          </div>
-          <div className="flex flex-1">
-            <div className="flex-1 flex items-center bg-table-head p-2">
-              대지면적
-            </div>
-            <div className="flex-3 flex items-center p-2">m ~ m</div>
-          </div>
-        </div>
-
-        {/* 비슷한 구성 반복 */}
-        <div className="flex ">
-          <div className="flex flex-1 ">
-            <div className="flex-1 flex items-center bg-table-head p-2">
-              유찰수
-            </div>
-            <div className="flex-3 flex items-center p-2">최소 ~ 최대</div>
-          </div>
-          <div className="flex flex-1">
-            <div className="flex-1 flex items-center bg-table-head p-2">
-              경매결과
-            </div>
-            <div className="flex-3 flex items-center p-2">진행물건</div>
-          </div>
-        </div>
       </div>
 
       <div className="flex justify-center">
-        <Button type="primary">검색하기</Button>
+        <Button type="primary" onClick={handleSearch}>
+          검색하기
+        </Button>
       </div>
     </div>
   );
 };
 
 export default SearchTable;
+
+// const SearchRow = ({
+//   label,
+//   children,
+// }: {
+//   label: string;
+//   children: React.ReactNode;
+// }) => {
+//   return (
+//     <div className="flex border-b border-border">
+//       <div className="flex flex-1">
+//         <div className="flex-1 flex items-center bg-table-head p-2">
+//           {label}
+//         </div>
+//         <div className="flex-3 flex items-center p-2">{children}</div>
+//       </div>
+//     </div>
+//   );
+// };
