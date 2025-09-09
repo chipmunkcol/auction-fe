@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { AuctionItem } from "../../data/auctionList";
 import type { Search } from "../store/AuctionStore";
+import type { AuctionDetail } from "../../data/auctionDetail/auctionDetail";
 
 interface Response_aucion {
   auctions: AuctionItem[] | [];
@@ -21,6 +22,40 @@ export const getAuction = async (
   });
 
   return (await axios.get(`/auction?${params.toString()}`)).data;
+};
+
+interface ApiResponse<T> {
+  status: number;
+  message: string;
+  data: {
+    data: {
+      data: T;
+    };
+  };
+}
+
+export const getAuctionDetail = async (
+  docId: string
+): Promise<AuctionDetail> => {
+  // return (await axios.get(`/auction/${docId}`))?.data?.data.data;
+
+  try {
+    const response: ApiResponse<AuctionDetail> = await axios.get(
+      `/auction/${docId}`
+    );
+
+    if (response.status !== 200) {
+      throw new Error(response.message || "데이터 조회에 실패했습니다");
+    }
+
+    const result = response.data.data.data;
+    return result;
+  } catch (err) {
+    if (err instanceof Error) {
+      throw err;
+    }
+    throw new Error("알 수 없는 오류 발생!");
+  }
 };
 
 // 무한스크롤 가정

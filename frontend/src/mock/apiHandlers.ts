@@ -1,10 +1,12 @@
 import { http, HttpResponse } from "msw";
 import { auctionListDummy } from "../../data/auctionList";
+import { auctionDetail } from "../../data/auctionDetail/auctionDetail";
 
 const auctionData = auctionListDummy;
+const auctionDetailData = auctionDetail.data.dma_result;
 
 export const mockApiHandlers = [
-  http.get("auction", ({ request }) => {
+  http.get("/auction", ({ request }) => {
     const url = new URL(request.url);
     const page = Number(url.searchParams.get("page") ?? "0");
     // const limit = Number(url.searchParams.get("limit") ?? "5");
@@ -39,5 +41,12 @@ export const mockApiHandlers = [
       hasNextPage,
       nextCursor: hasNextPage ? page + 1 : undefined,
     });
+  }),
+
+  http.get("/auction/:docId", ({ params }) => {
+    const { docId } = params;
+    console.log("🚀 ~ docId:", docId);
+
+    return HttpResponse.json({ data: auctionDetailData });
   }),
 ];

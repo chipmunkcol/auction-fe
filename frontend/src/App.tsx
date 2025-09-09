@@ -35,7 +35,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Main />}></Route>
               <Route path="/auction" element={<Auction />}></Route>
-              <Route path="/auction/:id" element={<AuctionDetail />}></Route>
+              <Route path="/auction/:docId" element={<AuctionDetail />}></Route>
 
               <Route path="/public-auction" element={<PublicAuction />}></Route>
 

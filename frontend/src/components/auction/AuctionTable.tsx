@@ -4,6 +4,7 @@ import { type AuctionItem } from "../../../data/auctionList";
 import { getAuction } from "../../api/api";
 import auctionImg from "../../assets/auctionImg.jpg";
 import { useAuctionStore } from "../../store/AuctionStore";
+import { useNavigate } from "react-router";
 
 const AuctionTable = () => {
   const { page, setPage, enabled, search } = useAuctionStore();
@@ -19,7 +20,11 @@ const AuctionTable = () => {
 
   const onChangePage = (page: number) => {
     setPage(page - 1);
-    // refetch();
+  };
+
+  const navigate = useNavigate();
+  const navigateDetail = (docid: string) => {
+    navigate(docid);
   };
 
   return (
@@ -39,8 +44,11 @@ const AuctionTable = () => {
           key="docid"
           title="사진"
           dataIndex={"img"}
-          render={() => (
-            <div className="w-[100px] h-[80px]">
+          render={(_, record) => (
+            <div
+              className="w-[100px] h-[80px]"
+              onClick={() => navigateDetail(record.docid)}
+            >
               <img className="w-full h-full object-cover" src={auctionImg} />
             </div>
           )}
