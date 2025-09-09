@@ -28,9 +28,7 @@ interface ApiResponse<T> {
   status: number;
   message: string;
   data: {
-    data: {
-      data: T;
-    };
+    data: T;
   };
 }
 
@@ -48,8 +46,26 @@ export const getAuctionDetail = async (
       throw new Error(response.message || "데이터 조회에 실패했습니다");
     }
 
-    const result = response.data.data.data;
+    const result = response.data.data;
     return result;
+  } catch (err) {
+    if (err instanceof Error) {
+      throw err;
+    }
+    throw new Error("알 수 없는 오류 발생!");
+  }
+};
+
+export const postAuctionLike = async (userId: string, docId: string) => {
+  try {
+    const response = await axios.post(`/users/${userId}/likes/auction`, {
+      docId,
+    });
+
+    if (response.status !== 200) {
+      throw new Error("좋아요 실패");
+    }
+    return response.data?.message;
   } catch (err) {
     if (err instanceof Error) {
       throw err;

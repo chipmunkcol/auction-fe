@@ -1,14 +1,14 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
 import { Table } from "antd";
 import { type AuctionItem } from "../../../data/auctionList";
-import { getAuction } from "../../api/api";
+import { getAuction, postAuctionLike } from "../../api/api";
 import auctionImg from "../../assets/auctionImg.jpg";
 import { useAuctionStore } from "../../store/AuctionStore";
 import { useNavigate } from "react-router";
 
 const AuctionTable = () => {
   const { page, setPage, enabled, search } = useAuctionStore();
-
+  const userId = "jack957";
   const { data } = useQuery({
     queryKey: ["auction", page, search],
     queryFn: () => getAuction(page, search),
@@ -25,6 +25,21 @@ const AuctionTable = () => {
   const navigate = useNavigate();
   const navigateDetail = (docid: string) => {
     navigate(docid);
+  };
+
+  const likeMutation = useMutation({
+    mutationFn: async ({ userId, docId }: { userId: string; docId: string }) =>
+      await postAuctionLike(userId, docId),
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
+
+  const handleLike = (docId: string) => {
+    likeMutation.mutate({ userId, docId });
   };
 
   return (
@@ -93,7 +108,12 @@ const AuctionTable = () => {
           key="docid"
           title="상태"
           dataIndex={"yuchalCnt"}
-          render={(text) => <div>유찰 {text}회</div>}
+          render={(_, record) => (
+            <div>
+              <div>유찰 {record.yuchalCnt}회</div>
+              <div onClick={() => handleLike(record.docid)}>💟</div>
+            </div>
+          )}
         />
         <Table.Column<AuctionItem>
           key="docid"

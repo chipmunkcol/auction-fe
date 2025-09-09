@@ -1,9 +1,11 @@
 import { http, HttpResponse } from "msw";
 import { auctionListDummy } from "../../data/auctionList";
 import { auctionDetail } from "../../data/auctionDetail/auctionDetail";
+import { userDummy } from "./../../data/user/userData";
 
 const auctionData = auctionListDummy;
 const auctionDetailData = auctionDetail.data.dma_result;
+const userData = userDummy;
 
 export const mockApiHandlers = [
   http.get("/auction", ({ request }) => {
@@ -48,5 +50,22 @@ export const mockApiHandlers = [
     console.log("🚀 ~ docId:", docId);
 
     return HttpResponse.json({ data: auctionDetailData });
+  }),
+
+  http.post("/users/:userId/likes/auction", async ({ params, request }) => {
+    const { userId } = params;
+    const { docId } = (await request.json()) as { docId: string };
+    // userId 별로 좋아요한 docid 추가 삭제
+    const userIndex = userData.findIndex((user) => user.아이디 === userId);
+    const targetUser = userData[userIndex];
+    if (userIndex === -1) return new HttpResponse(null, { status: 400 });
+
+    if (targetUser.좋아요.includes(docId)) {
+      userData[userIndex].좋아요 = targetUser.좋아요.filter((v) => v !== docId);
+      return HttpResponse.json({ message: "좋아요 취소 성공" });
+    } else {
+      targetUser.좋아요.push(docId);
+      return HttpResponse.json({ message: "좋아요 성공" });
+    }
   }),
 ];

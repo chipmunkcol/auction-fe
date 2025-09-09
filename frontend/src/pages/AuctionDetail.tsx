@@ -6,7 +6,7 @@ import { getAuctionDetail } from "../api/api";
 
 export default function AuctionDetail() {
   const { docId } = useParams();
-  console.log("🚀 ~ AuctionDetail ~ docId:", docId);
+  // console.log("🚀 ~ AuctionDetail ~ docId:", docId);
 
   const { data, error } = useQuery({
     queryKey: ["auction-detail", docId],
@@ -34,7 +34,7 @@ export default function AuctionDetail() {
   // 보증금
   // 매각조건건
 
-  const {} = data;
+  const { aeeWevlMnpntLst, aroundDspslStats } = data;
 
   return <div></div>;
 }
