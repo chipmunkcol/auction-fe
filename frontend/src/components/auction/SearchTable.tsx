@@ -1,4 +1,9 @@
 import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQuery,
+} from "@tanstack/react-query";
+import {
   Button,
   DatePicker,
   Input,
@@ -9,6 +14,8 @@ import {
 import axios from "axios";
 import type dayjs from "dayjs";
 import { useState } from "react";
+import { getAuction } from "../../api/api";
+import { useAuctionStore } from "../../store/AuctionStore";
 const { RangePicker } = DatePicker;
 
 const 법원option = [
@@ -35,6 +42,18 @@ const 감정가option = [
 ];
 
 const SearchTable = () => {
+  const { startEnabled } = useAuctionStore();
+
+  // const { data } = useQuery({
+  //   queryKey: ["auction", page],
+  //   queryFn: () => getAuction(page),
+  //   enabled: enabled,
+
+  //   placeholderData: keepPreviousData,
+  // });
+
+  // console.log("🚀 ~ SearchTable ~ isFetching:", isFetching);
+
   const [법원, set법원] = useState("");
   const onChange법원 = (value: string) => {
     set법원(value);
@@ -66,15 +85,7 @@ const SearchTable = () => {
   });
 
   const handleSearch = () => {
-    axios.get("temp", {
-      params: {
-        법원,
-        사건년도,
-        타경,
-        경매종류,
-        매각기일,
-      },
-    });
+    startEnabled();
   };
 
   return (
@@ -224,7 +235,11 @@ const SearchTable = () => {
       </div>
 
       <div className="flex justify-center">
-        <Button type="primary" onClick={handleSearch}>
+        <Button
+          type="primary"
+          onClick={handleSearch}
+          // loading={isFetching}
+        >
           검색하기
         </Button>
       </div>

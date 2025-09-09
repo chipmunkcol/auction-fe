@@ -1,13 +1,43 @@
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQuery,
+} from "@tanstack/react-query";
 import { Table } from "antd";
-import { auctionListDummy, type AuctionItem } from "../../../data/auctionList";
+import { type AuctionItem } from "../../../data/auctionList";
+import { getAuction } from "../../api/api";
 import auctionImg from "../../assets/auctionImg.jpg";
+import { useAuctionStore } from "../../store/AuctionStore";
 
 const AuctionTable = () => {
-  const data: AuctionItem[] = auctionListDummy;
+  const { page, setPage, enabled } = useAuctionStore();
+
+  const { data } = useQuery({
+    queryKey: ["auction", page],
+    queryFn: () => getAuction(page),
+    enabled: enabled,
+
+    placeholderData: keepPreviousData,
+  });
+  console.log("🚀 ~ AuctionTable ~ data:", data);
+
+  const onChangePage = (page: number) => {
+    setPage(page - 1);
+    // refetch();
+  };
 
   return (
     <>
-      <Table<AuctionItem> dataSource={data} className="text-center w-full">
+      <Table<AuctionItem>
+        dataSource={data?.auctions}
+        className="text-center w-full"
+        pagination={{
+          // current: page,
+          total: data?.total || 0,
+          pageSize: 2,
+          onChange: onChangePage,
+        }}
+      >
         <Table.Column<AuctionItem>
           key="docid"
           title="사진"

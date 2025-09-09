@@ -1,19 +1,19 @@
 import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./App.css";
+import ButtonComponet from "./components/common/ButtonComponet";
+import DescTableCompeont from "./components/common/DescTableCompeont";
 import Header from "./components/common/Header";
+import InputComponent from "./components/common/InputComponent.js";
+import TableComponent from "./components/common/TableComponent";
 import { ThemeContext } from "./hooks/ThemeContext.js";
 import Dashboard from "./pages/admin/Dashboard";
 import Auction from "./pages/Auction";
 import AuctionDetail from "./pages/AuctionDetail";
-import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup";
-import Main from "./pages/main";
+import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
+import Main from "./pages/Main";
 import PublicAuction from "./pages/PublicAuction";
-import TableComponent from "./components/common/TableComponent";
-import DescTableCompeont from "./components/common/DescTableCompeont";
-import ButtonComponet from "./components/common/ButtonComponet";
-import InputComponent from "./components/common/InputComponent.js";
 
 function App() {
   // 로그인 시 유저 정보 저장 및 admin 판단

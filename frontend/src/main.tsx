@@ -4,6 +4,56 @@ import App from "./App.tsx";
 import { ThemeProvider } from "./hooks/ThemeContext.tsx";
 import { ConfigProvider } from "antd";
 import koKR from "antd/locale/ko_KR";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+async function prepare() {
+  const { setupWorker } = await import("msw/browser");
+  const { mockApiHandlers } = await import("./mock/apiHandlers.ts");
+  const worker = setupWorker(...mockApiHandlers);
+  return worker.start();
+}
+
+const queryClient = new QueryClient();
+
+prepare().then(() => {
+  createRoot(document.getElementById("root")!).render(
+    // <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <ConfigProvider
+          // theme={getAntdTheme()}App
+          locale={koKR}
+          theme={{
+            token: {
+              // colorPrimary: getCssVar("--primary"),
+              borderRadius: 0,
+            },
+            components: {
+              Button: {
+                colorPrimary: getCssVar("--primary"),
+              },
+
+              DatePicker: {
+                borderRadius: 0,
+              },
+              Input: {
+                // input은 효과없는게 좋을듯
+                borderRadius: 0,
+
+                colorBorder: "#d9d9d9", // 기본 테두리
+                // controlInteractive: '#d9d9d9', // hover/active 시 강조색 제거
+                controlItemBgHover: "transparent", // hover 시 배경 없음
+                controlItemBgActive: "transparent", // active 시 배경 없음
+              },
+            },
+          }}
+        >
+          <App />
+        </ConfigProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+});
 
 function getCssVar(name: string) {
   return getComputedStyle(document.documentElement)
@@ -18,39 +68,3 @@ export function getAntdTheme() {
     },
   };
 }
-
-createRoot(document.getElementById("root")!).render(
-  // <StrictMode>
-  <ThemeProvider>
-    <ConfigProvider
-      // theme={getAntdTheme()}App
-      locale={koKR}
-      theme={{
-        token: {
-          // colorPrimary: getCssVar("--primary"),
-          borderRadius: 0,
-        },
-        components: {
-          Button: {
-            colorPrimary: getCssVar("--primary"),
-          },
-
-          DatePicker: {
-            borderRadius: 0,
-          },
-          Input: {
-            // input은 효과없는게 좋을듯
-            borderRadius: 0,
-
-            colorBorder: "#d9d9d9", // 기본 테두리
-            // controlInteractive: '#d9d9d9', // hover/active 시 강조색 제거
-            controlItemBgHover: "transparent", // hover 시 배경 없음
-            controlItemBgActive: "transparent", // active 시 배경 없음
-          },
-        },
-      }}
-    >
-      <App />
-    </ConfigProvider>
-  </ThemeProvider>
-);

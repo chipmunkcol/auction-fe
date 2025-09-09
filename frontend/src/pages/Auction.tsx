@@ -1,81 +1,49 @@
-import { useNavigate } from "react-router";
-import { auctionListDummy, type AuctionItem } from "../../data/auctionList";
-import type { Auction } from "../types/auction";
-import SearchTable from "../components/auction/SearchTable";
 import AuctionTable from "../components/auction/AuctionTable";
+import SearchTable from "../components/auction/SearchTable";
 
 export default function Auction() {
-  const auctionData = auctionListDummy;
-
   return (
     <div>
       <h1>경매 물건 페이지</h1>
-      <Table auctionData={auctionData} />
+      <div className="flex flex-col items-center w-[1440px] mx-auto">
+        <div className="w-full">
+          <SearchTable />
+        </div>
+
+        <div className="w-full">
+          <AuctionTable />
+        </div>
+      </div>
     </div>
   );
 }
 
-const Table: React.FC<{ auctionData: AuctionItem[] }> = ({ auctionData }) => {
-  const navigate = useNavigate();
+// 상태 계산 (입찰당일 / 예정)
+// const getStatus = (data: AuctionItem) => {
+//   const today = new Date();
+//   const auctionDate = new Date(
+//     Number(data.maeGiil.slice(0, 4)),
+//     Number(data.maeGiil.slice(4, 6)) - 1,
+//     Number(data.maeGiil.slice(6, 8))
+//   );
 
-  // 날짜 변환 (20250827 → 2025-08-27)
-  const formatDate = (dateStr: string) => {
-    return `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(
-      6,
-      8
-    )}`;
-  };
+//   if (
+//     today.getFullYear() === auctionDate.getFullYear() &&
+//     today.getMonth() === auctionDate.getMonth() &&
+//     today.getDate() === auctionDate.getDate()
+//   ) {
+//     return "입찰당일";
+//   } else if (today < auctionDate) {
+//     return "예정";
+//   } else {
+//     return "종료";
+//   }
+// };
 
-  // 시간 변환 (1000 → 10:00)
-  const formatTime = (timeStr: string) => {
-    if (!timeStr) return "";
-    return `${timeStr.slice(0, 2)}:${timeStr.slice(2, 4)}`;
-  };
-
-  // 숫자 3자리 콤마
-  const formatNumber = (numStr: string) => {
-    return Number(numStr).toLocaleString();
-  };
-
-  // 상태 계산 (입찰당일 / 예정)
-  const getStatus = (data: AuctionItem) => {
-    const today = new Date();
-    const auctionDate = new Date(
-      Number(data.maeGiil.slice(0, 4)),
-      Number(data.maeGiil.slice(4, 6)) - 1,
-      Number(data.maeGiil.slice(6, 8))
-    );
-
-    if (
-      today.getFullYear() === auctionDate.getFullYear() &&
-      today.getMonth() === auctionDate.getMonth() &&
-      today.getDate() === auctionDate.getDate()
-    ) {
-      return "입찰당일";
-    } else if (today < auctionDate) {
-      return "예정";
-    } else {
-      return "종료";
-    }
-  };
-
-  const navigateAuctionDetail = (id: string) => {
-    // navigate(`/auction/${id}`) // 절대경로
-    navigate(id); // 상대경로
-  };
-
-  return (
-    <div className="flex flex-col items-center w-[1440px] mx-auto">
-      <div className="w-full">
-        <SearchTable />
-      </div>
-
-      <div className="w-full">
-        <AuctionTable />
-      </div>
-    </div>
-  );
-};
+// const navigateAuctionDetail = (id: string) => {
+//   // navigate(`/auction/${id}`) // 절대경로
+//   navigate(id); // 상대경로
+// };
 
 // <table className="min-w-6xl border border-gray-300 text-sm">
 // <thead className="bg-table-head text-table-foreground ">
