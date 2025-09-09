@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { AuctionItem } from "../../data/auctionList";
+import type { Search } from "../store/AuctionStore";
 
 interface Response_aucion {
   auctions: AuctionItem[] | [];
@@ -8,8 +9,18 @@ interface Response_aucion {
   nextCursor: number | undefined;
 }
 
-export const getAuction = async (page = 0): Promise<Response_aucion> => {
-  return (await axios.get(`/auction?page=${page}`)).data;
+export const getAuction = async (
+  page = 0,
+  search: Search
+): Promise<Response_aucion> => {
+  const { srnSaNo, printSt } = search;
+  const params = new URLSearchParams({
+    page: page.toString(),
+    srnSaNo,
+    printSt,
+  });
+
+  return (await axios.get(`/auction?${params.toString()}`)).data;
 };
 
 // 무한스크롤 가정

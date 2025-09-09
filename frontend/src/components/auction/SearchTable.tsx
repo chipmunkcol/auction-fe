@@ -13,7 +13,7 @@ import {
 } from "antd";
 import axios from "axios";
 import type dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAuction } from "../../api/api";
 import { useAuctionStore } from "../../store/AuctionStore";
 const { RangePicker } = DatePicker;
@@ -42,7 +42,7 @@ const 감정가option = [
 ];
 
 const SearchTable = () => {
-  const { startEnabled } = useAuctionStore();
+  const { startEnabled, setSearch, setPage } = useAuctionStore();
 
   // const { data } = useQuery({
   //   queryKey: ["auction", page],
@@ -70,6 +70,11 @@ const SearchTable = () => {
     set타경(e.target.value);
   };
 
+  const [명칭, set명칭] = useState("");
+  const onChange명칭 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    set명칭(e.target.value);
+  };
+
   const [경매종류, set경매종류] = useState("전체");
   const onChange경매종류 = (e: RadioChangeEvent) => {
     set경매종류(e.target.value);
@@ -85,6 +90,13 @@ const SearchTable = () => {
   });
 
   const handleSearch = () => {
+    const newSearch = {
+      printSt: 명칭,
+      srnSaNo: 타경,
+    };
+
+    setPage(0);
+    setSearch(newSearch);
     startEnabled();
   };
 
@@ -146,7 +158,10 @@ const SearchTable = () => {
               명칭검색
             </div>
             <div className="flex-3 p-2">
-              <Input placeholder="소재지 또는 건물명칭 입력" />
+              <Input
+                onChange={onChange명칭}
+                placeholder="소재지 또는 건물명칭 입력"
+              />
             </div>
           </div>
         </div>

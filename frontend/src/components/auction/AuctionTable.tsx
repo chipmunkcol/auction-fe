@@ -1,8 +1,4 @@
-import {
-  keepPreviousData,
-  useInfiniteQuery,
-  useQuery,
-} from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Table } from "antd";
 import { type AuctionItem } from "../../../data/auctionList";
 import { getAuction } from "../../api/api";
@@ -10,11 +6,11 @@ import auctionImg from "../../assets/auctionImg.jpg";
 import { useAuctionStore } from "../../store/AuctionStore";
 
 const AuctionTable = () => {
-  const { page, setPage, enabled } = useAuctionStore();
+  const { page, setPage, enabled, search } = useAuctionStore();
 
   const { data } = useQuery({
-    queryKey: ["auction", page],
-    queryFn: () => getAuction(page),
+    queryKey: ["auction", page, search],
+    queryFn: () => getAuction(page, search),
     enabled: enabled,
 
     placeholderData: keepPreviousData,
@@ -33,6 +29,7 @@ const AuctionTable = () => {
         className="text-center w-full"
         pagination={{
           // current: page,
+          defaultCurrent: 1,
           total: data?.total || 0,
           pageSize: 2,
           onChange: onChangePage,
@@ -61,7 +58,13 @@ const AuctionTable = () => {
         <Table.Column<AuctionItem>
           key="docid"
           title="물건기본내역"
-          dataIndex={"printSt"}
+          // dataIndex={"printSt"}
+          render={(_, record) => (
+            <div>
+              <div>{record.srnSaNo}</div>
+              <div>{record.printSt}</div>
+            </div>
+          )}
         />
         <Table.Column<AuctionItem>
           key="docid"
