@@ -1,6 +1,8 @@
 #### 소재지
 
 ```
+
+(자세히)
 // 지번 주소 구성
 adongSdNm: "서울특별시"      // 시도명
 adongSggNm: "동작구"         // 시군구명
@@ -17,14 +19,14 @@ rdnmRefcAddr: "(상도동,상도효성해링턴플레이스)" // 도로명 참�
 bldNm: "상도효성해링턴플레이스"  // 건물명
 bldDtlDts: "101동 25층2503호"    // 건물 상세 (동/층/호)
 
-도로명 주소 기반:
-{rdnmSdNm} {rdnmSggNm} {rdnm} {rdnmBldNo}, {bldDtlDts} {rdnmRefcAddr}
 지번 주소 기반:
 {adongSdNm} {adongSggNm} {adongEmdNm} {rprsLtnoAddr} {bldNm} {bldDtlDts}
 
-위치
-사건상세조회 → dlt_dspslGdsDspslObjctLst[0] 또는 dlt_rletCsDspslObjctLst[0]
-auctionDetail → gdsDspslObjctLst[0] 또는 gdsRletStLtnoLstAll[0][0]
+도로명 주소 기반:
+{rdnmSdNm} {rdnmSggNm} {rdnm} {rdnmBldNo}, {bldDtlDts} {rdnmRefcAddr}
+
+// ** 도로명은 userPrintSt 속성 써도 될듯함 // "서울특별시 동작구 상도로 207, 101동 25층2503호 (상도동,상도효성해링턴플레이스)",
+
 ```
 
 #### 물건 종별
@@ -71,7 +73,7 @@ bldSdtrDtlDts: "철근콘크리트구조 84.8136㎡"  // 건물구조상세내�
 pjbBuldList: "철근콘크리트구조 84.8136㎡"    // 표제부건물목록 (동일값)
 ```
 
-#### 소유자 & 채무자 & 채권자자 (풀네임은 등기부등본 내역 인듯 함)
+#### 소유자 & 채무자 & 채권자 (풀네임은 등기부등본 내역 인듯 함)
 
 ```
 // 사건상세조회 → dlt_rletCsIntrpsLst (관련인목록)
@@ -95,6 +97,11 @@ pjbBuldList: "철근콘크리트구조 84.8136㎡"    // 표제부건물목록 (
 "0001563" → "근저당권자"
 "0001564" → "가압류권자"
 "0001571" → "교부권자"
+
+추가로 필요한 구분 코드
+"소유자"     //
+"채무자"     //
+"제3취득자"  //
 
 ```
 

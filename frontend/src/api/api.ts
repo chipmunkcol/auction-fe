@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { AuctionItem } from "../../data/auctionList";
 import type { Search } from "../store/AuctionStore";
-import type { AuctionDetail } from "../../data/auctionDetail/auctionDetail";
+import type { AuctionDetail } from "./../../data/types/auction.d.ts";
 
 interface Response_aucion {
   auctions: AuctionItem[] | [];

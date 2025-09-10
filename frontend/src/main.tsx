@@ -27,8 +27,19 @@ prepare().then(() => {
             token: {
               // colorPrimary: getCssVar("--primary"),
               borderRadius: 0,
+              colorText: getCssVar("--foreground"),
+              colorTextSecondary: getCssVar("--muted-foreground"),
             },
             components: {
+              Table: {
+                headerBg: getCssVar("--table-head"),
+                borderColor: getCssVar("--border"),
+              },
+              Descriptions: {
+                // labelBg: getCssVar("--table-head"), // 라벨 배경
+                colorTextLabel: getCssVar("--table-head-foreground"), // 라벨 텍스트색
+                // colorBgContainer: getCssVar("--card"), // 컨테이너 배경
+              },
               Button: {
                 colorPrimary: getCssVar("--primary"),
               },

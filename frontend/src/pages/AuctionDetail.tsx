@@ -1,42 +1,18 @@
 // 디테일 페이지 각각 개별 api 호출
-import { useQuery } from "@tanstack/react-query";
-import { auctionDetail } from "../../data/auctionDetail/auctionDetail";
-import { useParams } from "react-router";
-import { getAuctionDetail } from "../api/api";
+import Appraisal from "../components/auctionDetail/Appraisal";
+import BaseInfo from "../components/auctionDetail/BaseInfo";
+import Bidding from "../components/auctionDetail/Bidding";
+import ItemForSale from "../components/auctionDetail/ItemForSale";
 
 export default function AuctionDetail() {
-  const { docId } = useParams();
-  // console.log("🚀 ~ AuctionDetail ~ docId:", docId);
-
-  const { data, error } = useQuery({
-    queryKey: ["auction-detail", docId],
-    queryFn: () => getAuctionDetail(docId as string),
-    enabled: !!docId, // docId가 있을 때만 실행
-  });
-  console.log("🚀 ~ AuctionDetail ~ data:", data);
-
-  if (error) return <div>Error: 뭔가 에러가 났음!</div>;
-  if (!data) return <div>데이터가 없습니다</div>;
-
-  // 소재지 adongSdNm adongSggNm adongEmdNm rprsLtnoAddr,
-  // 도로명주소
-  // 물건종별
-  // 사건접수
-  // 경매구분
-  // 대지권
-  // 소유자
-  // 감정가
-  // 건물면적
-  // 채무자
-  // 최저가
-  // 배동종기일
-  // 채권자
-  // 보증금
-  // 매각조건건
-
-  const { aeeWevlMnpntLst, aroundDspslStats } = data;
-
-  return <div></div>;
+  return (
+    <div>
+      <BaseInfo />
+      <Bidding />
+      <ItemForSale />
+      <Appraisal />
+    </div>
+  );
 }
 // const csBaseInfo = auctionData.csBaseInfo;
 //   const dspslGdsInfo = auctionData.dspslGdsDxdyInfo;
