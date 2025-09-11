@@ -9,11 +9,13 @@ import TableComponent from "./components/common/TableComponent";
 import { ThemeContext } from "./hooks/ThemeContext.js";
 import Dashboard from "./pages/admin/Dashboard";
 import Auction from "./pages/Auction";
-import AuctionDetail from "./pages/AuctionDetail";
+import AuctionDetail from "./pages/auctionDetail/AuctionDetail.js";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import Main from "./pages/Main";
 import PublicAuction from "./pages/PublicAuction";
+import CaseDetail from "./pages/auctionDetail/CaseDetail.js";
+import Appraisal from "./pages/auctionDetail/Appraisal.js";
 
 function App() {
   // 로그인 시 유저 정보 저장 및 admin 판단
@@ -36,6 +38,11 @@ function App() {
               <Route path="/" element={<Main />}></Route>
               <Route path="/auction" element={<Auction />}></Route>
               <Route path="/auction/:docId" element={<AuctionDetail />}></Route>
+              <Route
+                path="/auction/:docId/case-detail"
+                element={<CaseDetail />}
+              />
+              <Route path="/auction/:docId/appraisal" element={<Appraisal />} />
 
               <Route path="/public-auction" element={<PublicAuction />}></Route>
 

@@ -1,16 +1,22 @@
 // 디테일 페이지 각각 개별 api 호출
-import Appraisal from "../components/auctionDetail/Appraisal";
-import BaseInfo from "../components/auctionDetail/BaseInfo";
-import Bidding from "../components/auctionDetail/Bidding";
-import ItemForSale from "../components/auctionDetail/ItemForSale";
+import Appraisal from "../../components/auctionDetail/Appraisal";
+import BaseInfo from "../../components/auctionDetail/BaseInfo";
+import Bidding from "../../components/auctionDetail/Bidding";
+import ItemForSale from "../../components/auctionDetail/ItemForSale";
+import Sidebar from "../../components/auctionDetail/sidebar/Sidebar";
 
 export default function AuctionDetail() {
   return (
-    <div>
-      <BaseInfo />
-      <Bidding />
-      <ItemForSale />
-      <Appraisal />
+    <div className="flex gap-4">
+      <div className="flex-6">
+        <BaseInfo />
+        <Bidding />
+        <ItemForSale />
+        <Appraisal />
+      </div>
+      <div className="flex-1 flex flex-col">
+        <Sidebar />
+      </div>
     </div>
   );
 }

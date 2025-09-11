@@ -22,9 +22,22 @@ const AuctionTable = () => {
     setPage(page - 1);
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const navigateDetail = (docid: string) => {
-    navigate(docid);
+    // navigate(docid);
+    const screenWidth = window.screen.width;
+    const screenHeight = window.screen.height;
+
+    const popupWidth = Math.floor(screenWidth * 0.7); // 화면의 70%
+    const popupHeight = screenHeight;
+    const left = screenWidth - popupWidth; // 오른쪽 정렬
+    const top = 0;
+
+    window.open(
+      `auction/${docid}`,
+      "_blank",
+      `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=yes,scrollbars=yes`
+    );
   };
 
   const likeMutation = useMutation({

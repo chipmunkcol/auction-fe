@@ -13,7 +13,7 @@ const BaseInfo = () => {
     queryFn: () => getAuctionDetail(docId as string),
     enabled: !!docId, // docId가 있을 때만 실행
   });
-  console.log("🚀 ~ AuctionDetail ~ data:", data);
+  // console.log("🚀 ~ AuctionDetail ~ data:", data);
 
   if (error) return <div>Error: 뭔가 에러가 났음!</div>;
   if (!data) return <div>데이터가 없습니다</div>;
