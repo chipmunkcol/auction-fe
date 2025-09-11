@@ -1,7 +1,7 @@
 import type { TableProps } from "antd";
 import { Table } from "antd";
 import React from "react";
-import { auctionDetail } from "../../../data/auctionDetail/auctionDetail";
+import { auctionDetail } from "../../../data/auctionDetail/auctionDetail/auctionDetail";
 
 const { gdsDspslDxdyLst } = auctionDetail.data.dma_result;
 

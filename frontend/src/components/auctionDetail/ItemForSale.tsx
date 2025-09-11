@@ -2,7 +2,7 @@ import { Table } from "antd";
 import type { TableProps } from "antd/lib";
 import { 부동산표시목록 } from "../../../data/auctionDetail/부동산표시목록";
 import type { OrdTsCurstExmnRgltLandLst } from "../../../data/types/auction";
-import { auctionDetail } from "../../../data/auctionDetail/auctionDetail";
+import { auctionDetail } from "../../../data/auctionDetail/auctionDetail/auctionDetail";
 
 const ItemForSale = () => {
   const { dlt_ordTsCurstExmnRgltLandLst, dlt_ordTsCurstExmnRletLst } =

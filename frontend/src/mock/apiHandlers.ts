@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { auctionListDummy } from "../../data/auctionList";
-import { auctionDetail } from "../../data/auctionDetail/auctionDetail";
+import { auctionDetail } from "../../data/auctionDetail/auctionDetail/auctionDetail";
 import { userDummy } from "./../../data/user/userData";
 
 const auctionData = auctionListDummy;

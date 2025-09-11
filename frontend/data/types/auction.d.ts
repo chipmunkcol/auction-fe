@@ -1,3 +1,117 @@
+// 현황조사서 관리 정보
+export interface CurstExmnMngInf {
+  cortOfcCd: string; // 법원청코드
+  csNo: string; // 사건번호
+  ordTsCnt: number; // 차수
+  auctnCurstExmnTrsmStatCd: string; // 경매현황조사전송상태코드
+  execIntgCsNmCd: string; // 집행통합사건명코드
+  lesDts: string | null; // 임대정보
+  exmndcRtrcnYmd: string | null; // 조사서회수일자
+  exmndcSndngYmd: string; // 조사서송달일자
+  exmndcRcptnYmd: string; // 조사서접수일자
+  fstmLstPossRltnDts: string | null; // 최초점유관계정보
+  scntmLstPossRltnDts: string | null; // 2차점유관계정보
+  exmnDtDts: string; // 조사일시정보
+  lwstDvsCd: string; // 최저구분코드
+  lstPossRltnDts: string | null; // 점유관계정보
+  userCsNo: string; // 사용자사건번호
+  printRltnDts: string; // 출력관련정보
+}
+
+// 현장조사 차수 목록
+export interface SpotExmnOrdCnt {
+  ordTsCnt: number; // 차수
+}
+
+// 부동산 정보
+export interface OrdTsRlet {
+  cortOfcCd: string; // 법원청코드
+  csNo: string; // 사건번호
+  ordTsCnt: number; // 차수
+  objctSeq: number; // 물건순번
+  dspslObjctSeq: number; // 처분물건순번
+  adongSdNm: string; // 행정동시도명
+  adongSggNm: string; // 행정동시군구명
+  adongEmdNm: string; // 행정동읍면동명
+  adongRiNm: string | null; // 행정동리명
+  rprsLtnoAddr: string; // 대표지번주소
+  auctnPossRltnCd: string; // 경매점유관계코드
+  gdsPossCtt: string; // 물건점유내용
+  rletLstRmk: string | null; // 부동산목록비고
+  rdnmSdNm: string; // 도로명시도명
+  rdnmSggNm: string; // 도로명시군구명
+  rdnmEmdNm: string | null; // 도로명읍면동명
+  rdnm: string; // 도로명
+  rdnmBldNo: string; // 도로명건물번호
+  rdnmRefcAddr: string | null; // 도로명참고주소
+  addrTypCd: string; // 주소유형코드
+  bldNm: string | null; // 건물명
+  ldcgDts: string | null; // 지목정보
+  objctArDts: string | null; // 물건면적정보
+  auctnLstDvsCd: string; // 경매목록구분코드
+  dspslStkCtt: string | null; // 처분지분내용
+  bldDtlDts: string; // 건물상세정보
+  lesCnt: number; // 임차건수
+  printSt: string; // 출력정보
+}
+
+// 사진 구분별 개수
+export interface OrdTsPicDvs {
+  cortAuctnPicDvsCd: string; // 법원경매사진구분코드
+  cortAuctnDvsPicCnt: number; // 법원경매구분사진건수
+}
+
+// 임차인 정보 (핵심!)
+export interface OrdTsLserLtn {
+  cortOfcCd: string; // 법원청코드
+  csNo: string; // 사건번호
+  ordTsCnt: number; // 차수
+  intrpsSeq: number; // 이해관계인순번
+  objctSeq: number; // 물건순번
+  btprtPrsnlDvsCd: string; // 당사자인적구분코드
+  enrrno: string | null; // 주민등록번호
+  zpcd: string; // 우편번호
+  basAddr: string; // 기본주소
+  objctDtlAddr: string; // 물건상세주소
+  auctnLesUsgCd: string; // 경매임차사용코드
+  lesUsgDts: string | null; // 임차사용정보
+  lesDposDts: string | null; // 임차보증금정보
+  mmrntAmtDts: string | null; // 월임료금액정보
+  gdsPossCtt: string | null; // 물건점유내용
+  mvinDtlCtt: string; // 전입일자내용
+  rgstryCrtcpCfmtnCtt: string; // 등기부등본확인내용
+  lesPartCtt: string; // 임차부분내용
+  lesDtsRmk: string | null; // 임차정보비고
+  adongSdNm: string; // 행정동시도명
+  adongSggNm: string; // 행정동시군구명
+  adongEmdNm: string; // 행정동읍면동명
+  adongRiNm: string | null; // 행정동리명
+  rprsLtnoAddr: string; // 대표지번주소
+  rdnmSdNm: string; // 도로명시도명
+  rdnmSggNm: string; // 도로명시군구명
+  rdnmEmdNm: string | null; // 도로명읍면동명
+  rdnm: string; // 도로명
+  rdnmBldNo: string; // 도로명건물번호
+  rdnmRefcAddr: string | null; // 도로명참고주소
+  addrTypCd: string; // 주소유형코드
+  bldNm: string | null; // 건물명
+  auctnLstDvsCd: string; // 경매목록구분코드
+  auctnIntrpsDvsCd: string; // 경매이해관계인구분코드
+  intrpsNm: string; // 이해관계인명 (임차인명)
+  bldDtlDts: string; // 건물상세정보
+  printSt: string; // 출력정보
+}
+
+// 전체 현황조사서 응답 데이터
+export interface InspectionReportData {
+  dma_curstExmnMngInf: CurstExmnMngInf;
+  dlt_spotExmnOrdCntLst: SpotExmnOrdCnt[];
+  dlt_curstExmnDpcnMrg: any[]; // 현황조사전결재정보 (비어있음)
+  dlt_ordTsRlet: OrdTsRlet[];
+  dlt_ordTsPicDvs: OrdTsPicDvs[];
+  dlt_ordTsLserLtn: OrdTsLserLtn[]; // 임차인 목록
+}
+
 // 부동산 현황조사 차수 목록
 export interface RletCsCurstExmnTs {
   ordTsCnt: number; // 차수
