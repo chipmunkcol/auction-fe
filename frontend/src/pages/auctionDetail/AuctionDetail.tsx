@@ -3,6 +3,8 @@ import Appraisal from "../../components/auctionDetail/Appraisal";
 import BaseInfo from "../../components/auctionDetail/BaseInfo";
 import Bidding from "../../components/auctionDetail/Bidding";
 import ItemForSale from "../../components/auctionDetail/ItemForSale";
+import ItemForSaleNearby from "../../components/auctionDetail/ItemForSaleNearby";
+import ItemProgressNearby from "../../components/auctionDetail/ItemProgressNearby";
 import Sidebar from "../../components/auctionDetail/sidebar/Sidebar";
 import Tenant from "../../components/auctionDetail/Tenant";
 
@@ -11,6 +13,8 @@ export default function AuctionDetail() {
     <div className="flex gap-4">
       <div className="flex-6 flex flex-col gap-6">
         <BaseInfo />
+        <ItemForSaleNearby />
+        <ItemProgressNearby />
         <Tenant />
         <Bidding />
         <ItemForSale />

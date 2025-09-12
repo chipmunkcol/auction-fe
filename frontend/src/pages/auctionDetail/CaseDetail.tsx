@@ -1,6 +1,6 @@
 import React from "react";
 import { Descriptions } from "antd";
-import { 사건상세조회 } from "../../../data/사건상세조회/사건상세조회";
+import { 사건상세조회 } from "../../../data/auctionDetail/사건상세조회/사건상세조회";
 
 const { dma_csBasInf, dlt_rletCsDspslObjctLst } = 사건상세조회.data;
 

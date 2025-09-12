@@ -1,7 +1,6 @@
-import React from "react";
 import { Descriptions } from "antd";
-import type { DescriptionsProps } from "antd";
-import { auctionDetail } from "../../../data/auctionDetail/auctionDetail/auctionDetail";
+import React from "react";
+import { auctionDetail } from "../../../data/auctionDetail/auctionDetail";
 
 const { csBaseInfo, gdsDspslObjctLst, rgltLandLstAll, bldSdtrDtlLstAll } =
   auctionDetail.data.dma_result;

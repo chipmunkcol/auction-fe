@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Descriptions } from "antd";
 import { useParams } from "react-router";
 import { getAuctionDetail } from "../../api/api";
-import { 사건상세조회 } from "../../../data/사건상세조회/사건상세조회";
+import { 사건상세조회 } from "../../../data/auctionDetail/사건상세조회/사건상세조회";
 
 const BaseInfo = () => {
   const { docId } = useParams();

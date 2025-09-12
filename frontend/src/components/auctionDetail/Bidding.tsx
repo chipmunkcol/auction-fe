@@ -1,5 +1,5 @@
 import { Table, type TableProps } from "antd";
-import { 기일내역 } from "../../../data/사건상세조회/기일내역";
+import { 기일내역 } from "../../../data/auctionDetail/사건상세조회/기일내역";
 import type { DspslGdsInfo } from "../../../data/types/auction";
 
 const Bidding = () => {
