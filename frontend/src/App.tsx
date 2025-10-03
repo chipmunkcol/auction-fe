@@ -16,6 +16,7 @@ import Main from "./pages/Main";
 import PublicAuction from "./pages/PublicAuction";
 import CaseDetail from "./pages/auctionDetail/CaseDetail.js";
 import Appraisal from "./pages/auctionDetail/Appraisal.js";
+import MapPage from "./pages/MapPage.js";
 
 function App() {
   // 로그인 시 유저 정보 저장 및 admin 판단
@@ -45,6 +46,9 @@ function App() {
               <Route path="/auction/:docId/appraisal" element={<Appraisal />} />
 
               <Route path="/public-auction" element={<PublicAuction />}></Route>
+
+              {/* 지도 */}
+              <Route path="/map" element={<MapPage />}></Route>
 
               {/* 인증 */}
               <Route path="/sign-up" element={<Signup />}></Route>

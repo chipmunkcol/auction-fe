@@ -10,7 +10,9 @@ async function prepare() {
   const { setupWorker } = await import("msw/browser");
   const { mockApiHandlers } = await import("./mock/apiHandlers.ts");
   const worker = setupWorker(...mockApiHandlers);
-  return worker.start();
+  return worker.start({
+    onUnhandledRequest: "bypass", // msw가 처리하지 않는 요청은 그대로 진행
+  });
 }
 
 const queryClient = new QueryClient();
